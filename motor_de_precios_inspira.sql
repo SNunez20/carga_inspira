@@ -1,233 +1,472 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 1310
+ Source Server         : local
  Source Server Type    : MySQL
- Source Server Version : 50714 (5.7.14)
- Source Host           : 192.168.13.10:3306
+ Source Server Version : 80200 (8.2.0)
+ Source Host           : localhost:3306
  Source Schema         : motor_de_precios_inspira
 
  Target Server Type    : MySQL
- Target Server Version : 50714 (5.7.14)
+ Target Server Version : 80200 (8.2.0)
  File Encoding         : 65001
 
- Date: 09/08/2024 16:23:27
+ Date: 23/09/2024 23:16:05
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
+-- Table structure for bancos_emisores
+-- ----------------------------
+DROP TABLE IF EXISTS `bancos_emisores`;
+CREATE TABLE `bancos_emisores`  (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `banco` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `mostrar` enum('0','1') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Records of bancos_emisores
+-- ----------------------------
+INSERT INTO `bancos_emisores` VALUES (1, 'BANCO DE LA REPUBLICA', '1');
+INSERT INTO `bancos_emisores` VALUES (2, 'BANCO HIPOTECARIO DEL URUGUAY', '1');
+INSERT INTO `bancos_emisores` VALUES (3, 'BANCO BANDES URUGUAY', '1');
+INSERT INTO `bancos_emisores` VALUES (4, 'BANCO BILBAO VIZCAYA ARGENTARIA URUGUAY S.A', '1');
+INSERT INTO `bancos_emisores` VALUES (5, 'BANCO DE LA NACION ARGENTINA (Sucursal Uruguay)', '1');
+INSERT INTO `bancos_emisores` VALUES (6, 'BANCO ITAU URUGUAY S.A', '1');
+INSERT INTO `bancos_emisores` VALUES (7, 'BANCO SANTANDER S.A.', '1');
+INSERT INTO `bancos_emisores` VALUES (8, 'BANQUE HERITAGE (URUGUAY) S.A.', '1');
+INSERT INTO `bancos_emisores` VALUES (9, 'CITIBANK N.A. (SUCURSAL URUGUAY)', '1');
+INSERT INTO `bancos_emisores` VALUES (10, 'HSBC BANK (URUGUAY) S.A', '1');
+INSERT INTO `bancos_emisores` VALUES (11, 'SCOTIABANK URUGUAY S.A.', '1');
+INSERT INTO `bancos_emisores` VALUES (12, 'BBVA', '1');
+INSERT INTO `bancos_emisores` VALUES (14, 'FUCAC', '1');
+INSERT INTO `bancos_emisores` VALUES (15, 'SIN BANCO EMISOR', '1');
+INSERT INTO `bancos_emisores` VALUES (16, 'CABAL VALOR', '1');
+INSERT INTO `bancos_emisores` VALUES (17, 'CABAL BANDES', '1');
+INSERT INTO `bancos_emisores` VALUES (18, 'CABAL FUSEREP', '1');
+INSERT INTO `bancos_emisores` VALUES (19, 'CABAL CREDICOMPRAS', '1');
+INSERT INTO `bancos_emisores` VALUES (20, 'CABAL VIACARD', '1');
+INSERT INTO `bancos_emisores` VALUES (21, 'CABAL NATIVA', '1');
+INSERT INTO `bancos_emisores` VALUES (22, 'CABAL COPAC', '1');
+INSERT INTO `bancos_emisores` VALUES (23, 'CABAL VIA CONFORT', '1');
+INSERT INTO `bancos_emisores` VALUES (24, 'CABAL CREDITO DE LA CASA', '1');
+INSERT INTO `bancos_emisores` VALUES (25, 'CABAL RETOP', '1');
+INSERT INTO `bancos_emisores` VALUES (26, 'CABAL CREDI YI', '1');
+
+-- ----------------------------
+-- Table structure for convenios
+-- ----------------------------
+DROP TABLE IF EXISTS `convenios`;
+CREATE TABLE `convenios`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `sucursal_cobranzas` int NULL DEFAULT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `activo` int NULL DEFAULT 1,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of convenios
+-- ----------------------------
+INSERT INTO `convenios` VALUES (1, 1373, 'AJUPECS', 1);
+INSERT INTO `convenios` VALUES (2, 1374, 'SOJUPEN', 1);
+INSERT INTO `convenios` VALUES (3, 1375, 'ADEOM', 1);
+INSERT INTO `convenios` VALUES (4, 1376, 'SOJUROS', 1);
+
+-- ----------------------------
 -- Table structure for lista_de_precios
 -- ----------------------------
 DROP TABLE IF EXISTS `lista_de_precios`;
 CREATE TABLE `lista_de_precios`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `activo` int(1) NULL DEFAULT 1,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_servicio` int NULL DEFAULT NULL,
+  `horas` int NULL DEFAULT NULL,
+  `edad_desde` int NULL DEFAULT NULL,
+  `edad_hasta` int NULL DEFAULT NULL,
+  `precio` int NULL DEFAULT NULL,
+  `activo` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 41 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = FIXED;
 
 -- ----------------------------
 -- Records of lista_de_precios
 -- ----------------------------
-INSERT INTO `lista_de_precios` VALUES (1, 'Actual Tradicional', 1);
-INSERT INTO `lista_de_precios` VALUES (2, 'Inspira SIMC', 1);
+INSERT INTO `lista_de_precios` VALUES (1, 1, 8, 0, 35, 560, 1);
+INSERT INTO `lista_de_precios` VALUES (2, 1, 8, 36, 65, 715, 1);
+INSERT INTO `lista_de_precios` VALUES (3, 1, 8, 66, NULL, 935, 1);
+INSERT INTO `lista_de_precios` VALUES (4, 1, 16, 0, 35, 1120, 1);
+INSERT INTO `lista_de_precios` VALUES (5, 1, 16, 36, 65, 1430, 1);
+INSERT INTO `lista_de_precios` VALUES (6, 1, 16, 66, NULL, 1870, 1);
+INSERT INTO `lista_de_precios` VALUES (7, 1, 24, 0, 35, 1680, 1);
+INSERT INTO `lista_de_precios` VALUES (8, 1, 24, 36, 65, 2145, 1);
+INSERT INTO `lista_de_precios` VALUES (9, 1, 24, 66, NULL, 2805, 1);
+INSERT INTO `lista_de_precios` VALUES (10, 2, 8, 0, 35, 560, 1);
+INSERT INTO `lista_de_precios` VALUES (11, 2, 8, 36, 65, 715, 1);
+INSERT INTO `lista_de_precios` VALUES (12, 2, 8, 66, NULL, 935, 1);
+INSERT INTO `lista_de_precios` VALUES (13, 2, 16, 0, 35, 1120, 1);
+INSERT INTO `lista_de_precios` VALUES (14, 2, 16, 36, 65, 1430, 1);
+INSERT INTO `lista_de_precios` VALUES (15, 2, 16, 66, NULL, 1870, 1);
+INSERT INTO `lista_de_precios` VALUES (16, 2, 24, 0, 35, 1680, 1);
+INSERT INTO `lista_de_precios` VALUES (17, 2, 24, 36, 65, 2145, 1);
+INSERT INTO `lista_de_precios` VALUES (18, 2, 24, 66, NULL, 2805, 1);
+INSERT INTO `lista_de_precios` VALUES (19, 4, 8, NULL, NULL, 115, 1);
+INSERT INTO `lista_de_precios` VALUES (20, 5, 8, NULL, NULL, 280, 1);
+INSERT INTO `lista_de_precios` VALUES (21, 6, 8, NULL, NULL, 605, 1);
+INSERT INTO `lista_de_precios` VALUES (22, 8, 8, NULL, NULL, 530, 1);
+INSERT INTO `lista_de_precios` VALUES (23, 8, 16, NULL, NULL, 1060, 1);
+INSERT INTO `lista_de_precios` VALUES (24, 8, 24, NULL, NULL, 1590, 1);
+INSERT INTO `lista_de_precios` VALUES (25, 9, 8, NULL, NULL, 530, 1);
+INSERT INTO `lista_de_precios` VALUES (26, 9, 16, NULL, NULL, 1060, 1);
+INSERT INTO `lista_de_precios` VALUES (27, 9, 24, NULL, NULL, 1590, 1);
+INSERT INTO `lista_de_precios` VALUES (28, 10, 8, NULL, NULL, 250, 1);
+INSERT INTO `lista_de_precios` VALUES (29, 11, 8, NULL, NULL, 390, 1);
+INSERT INTO `lista_de_precios` VALUES (30, 12, 8, NULL, NULL, 325, 1);
+INSERT INTO `lista_de_precios` VALUES (31, 13, 8, NULL, NULL, 1210, 1);
+INSERT INTO `lista_de_precios` VALUES (32, 13, 16, NULL, NULL, 2195, 1);
+INSERT INTO `lista_de_precios` VALUES (33, 13, 24, NULL, NULL, 2945, 1);
+INSERT INTO `lista_de_precios` VALUES (34, 14, NULL, NULL, NULL, 0, 0);
+INSERT INTO `lista_de_precios` VALUES (35, 15, 8, NULL, NULL, 1730, 1);
+INSERT INTO `lista_de_precios` VALUES (36, 15, 16, NULL, NULL, 3140, 1);
+INSERT INTO `lista_de_precios` VALUES (37, 15, 24, NULL, NULL, 4210, 1);
+INSERT INTO `lista_de_precios` VALUES (38, 16, NULL, NULL, NULL, 0, 0);
+INSERT INTO `lista_de_precios` VALUES (39, 18, 8, NULL, NULL, 425, 1);
+INSERT INTO `lista_de_precios` VALUES (40, 19, 8, NULL, NULL, 600, 1);
 
 -- ----------------------------
 -- Table structure for localidades
 -- ----------------------------
 DROP TABLE IF EXISTS `localidades`;
 CREATE TABLE `localidades`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `activo` int(1) NULL DEFAULT 1,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `id_filial` int NULL DEFAULT NULL,
+  `activo` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 192 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of localidades
 -- ----------------------------
-INSERT INTO `localidades` VALUES (1, 'Agraciada', 1);
-INSERT INTO `localidades` VALUES (2, 'Artilleros', 1);
-INSERT INTO `localidades` VALUES (3, 'Barker', 1);
-INSERT INTO `localidades` VALUES (4, 'Campana', 1);
-INSERT INTO `localidades` VALUES (5, 'Carmelo', 1);
-INSERT INTO `localidades` VALUES (6, 'Colonia', 1);
-INSERT INTO `localidades` VALUES (7, 'Colonia Valdense', 1);
-INSERT INTO `localidades` VALUES (8, 'Conchillas', 1);
-INSERT INTO `localidades` VALUES (9, 'Cufré', 1);
-INSERT INTO `localidades` VALUES (10, 'Florencio Sánchez', 1);
-INSERT INTO `localidades` VALUES (11, 'Juan Lacaze', 1);
-INSERT INTO `localidades` VALUES (12, 'La Estanzuela', 1);
-INSERT INTO `localidades` VALUES (13, 'La Paz', 1);
-INSERT INTO `localidades` VALUES (14, 'Los Pinos', 1);
-INSERT INTO `localidades` VALUES (15, 'Miguelete', 1);
-INSERT INTO `localidades` VALUES (16, 'Minuano', 1);
-INSERT INTO `localidades` VALUES (17, 'Nueva Helvecia', 1);
-INSERT INTO `localidades` VALUES (18, 'Nueva Palmira', 1);
-INSERT INTO `localidades` VALUES (19, 'Ombúes de Lavalle', 1);
-INSERT INTO `localidades` VALUES (20, 'Playa Fomento', 1);
-INSERT INTO `localidades` VALUES (21, 'Riachuelo', 1);
-INSERT INTO `localidades` VALUES (22, 'Rosario', 1);
-INSERT INTO `localidades` VALUES (23, 'Santa Ana', 1);
-INSERT INTO `localidades` VALUES (24, 'Tarariras', 1);
+INSERT INTO `localidades` VALUES (167, 'Agraciada', 8, 1);
+INSERT INTO `localidades` VALUES (169, 'Artilleros', 8, 1);
+INSERT INTO `localidades` VALUES (170, 'Barker', 8, 1);
+INSERT INTO `localidades` VALUES (171, 'Campana', 8, 1);
+INSERT INTO `localidades` VALUES (172, 'Carmelo', 8, 1);
+INSERT INTO `localidades` VALUES (173, 'Colonia', 8, 1);
+INSERT INTO `localidades` VALUES (174, 'Colonia Valdense', 8, 1);
+INSERT INTO `localidades` VALUES (175, 'Conchillas', 8, 1);
+INSERT INTO `localidades` VALUES (176, 'Cufré', 8, 1);
+INSERT INTO `localidades` VALUES (177, 'Florencio Sánchez', 8, 1);
+INSERT INTO `localidades` VALUES (178, 'Juan Lacaze', 8, 1);
+INSERT INTO `localidades` VALUES (179, 'La Estanzuela', 8, 1);
+INSERT INTO `localidades` VALUES (180, 'La Paz', 8, 1);
+INSERT INTO `localidades` VALUES (181, 'Los Pinos', 8, 1);
+INSERT INTO `localidades` VALUES (182, 'Miguelete', 8, 1);
+INSERT INTO `localidades` VALUES (183, 'Minuano', 8, 1);
+INSERT INTO `localidades` VALUES (184, 'Nueva Helvecia', 8, 1);
+INSERT INTO `localidades` VALUES (185, 'Nueva Palmira', 8, 1);
+INSERT INTO `localidades` VALUES (186, 'Ombúes de Lavalle', 8, 1);
+INSERT INTO `localidades` VALUES (187, 'Playa Fomento', 8, 1);
+INSERT INTO `localidades` VALUES (188, 'Riachuelo', 8, 1);
+INSERT INTO `localidades` VALUES (189, 'Rosario', 8, 1);
+INSERT INTO `localidades` VALUES (190, 'Santa Ana', 8, 1);
+INSERT INTO `localidades` VALUES (191, 'Tarariras', 8, 1);
 
 -- ----------------------------
--- Table structure for motor
+-- Table structure for log_errores
 -- ----------------------------
-DROP TABLE IF EXISTS `motor`;
-CREATE TABLE `motor`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_lista_de_precios` int(11) NULL DEFAULT NULL,
-  `id_servicio` int(11) NULL DEFAULT NULL,
-  `horas` int(11) NULL DEFAULT NULL,
-  `edad_desde` int(11) NULL DEFAULT NULL,
-  `edad_hasta` int(11) NULL DEFAULT NULL,
-  `precio` int(11) NULL DEFAULT NULL,
-  `activo` int(1) NULL DEFAULT 1,
+DROP TABLE IF EXISTS `log_errores`;
+CREATE TABLE `log_errores`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre_archivo` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `consulta` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
+  `error` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
+  `fecha_registro` datetime NULL DEFAULT NULL,
+  `activo` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 42 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of motor
+-- Records of log_errores
 -- ----------------------------
-INSERT INTO `motor` VALUES (1, 1, 1, 8, 0, 35, 560, 1);
-INSERT INTO `motor` VALUES (2, 1, 1, 8, 36, 65, 715, 1);
-INSERT INTO `motor` VALUES (3, 1, 1, 8, 66, NULL, 935, 1);
-INSERT INTO `motor` VALUES (4, NULL, 2, 8, 0, 35, 560, 1);
-INSERT INTO `motor` VALUES (5, NULL, 2, 8, 36, 65, 715, 1);
-INSERT INTO `motor` VALUES (6, NULL, 2, 8, 66, NULL, 935, 1);
-INSERT INTO `motor` VALUES (7, NULL, 3, 8, NULL, NULL, 530, 1);
-INSERT INTO `motor` VALUES (8, NULL, 3, 16, NULL, NULL, 1060, 1);
-INSERT INTO `motor` VALUES (9, NULL, 3, 24, NULL, NULL, 1590, 1);
-INSERT INTO `motor` VALUES (10, NULL, 4, 8, NULL, NULL, 530, 1);
-INSERT INTO `motor` VALUES (11, NULL, 4, 16, NULL, NULL, 1060, 1);
-INSERT INTO `motor` VALUES (12, NULL, 4, 24, NULL, NULL, 1590, 1);
-INSERT INTO `motor` VALUES (13, NULL, 5, 8, NULL, NULL, 530, 1);
-INSERT INTO `motor` VALUES (14, NULL, 5, 16, NULL, NULL, 1060, 1);
-INSERT INTO `motor` VALUES (15, NULL, 5, 24, NULL, NULL, 1590, 1);
-INSERT INTO `motor` VALUES (16, NULL, 6, 8, NULL, NULL, 530, 1);
-INSERT INTO `motor` VALUES (17, NULL, 6, 16, NULL, NULL, 1060, 1);
-INSERT INTO `motor` VALUES (18, NULL, 6, 24, NULL, NULL, 1590, 1);
-INSERT INTO `motor` VALUES (19, 2, 1, 8, 0, 35, NULL, 0);
-INSERT INTO `motor` VALUES (20, 2, 1, 8, 36, 65, NULL, 0);
-INSERT INTO `motor` VALUES (21, 2, 1, 8, 66, NULL, NULL, 0);
-INSERT INTO `motor` VALUES (22, 2, 1, 8, 0, 35, NULL, 0);
-INSERT INTO `motor` VALUES (23, 2, 1, 8, 36, 65, NULL, 0);
-INSERT INTO `motor` VALUES (24, 2, 1, 8, 66, NULL, NULL, 0);
-INSERT INTO `motor` VALUES (25, 2, 1, 8, 0, 35, NULL, 0);
-INSERT INTO `motor` VALUES (26, 2, 1, 8, 36, 65, NULL, 0);
-INSERT INTO `motor` VALUES (27, 2, 1, 8, 66, NULL, NULL, 0);
-INSERT INTO `motor` VALUES (28, NULL, 7, NULL, NULL, NULL, 115, 1);
-INSERT INTO `motor` VALUES (29, NULL, 8, NULL, NULL, NULL, 280, 1);
-INSERT INTO `motor` VALUES (30, NULL, 9, 8, 63, 64, 1210, 1);
-INSERT INTO `motor` VALUES (31, NULL, 9, 16, 63, 64, 2195, 1);
-INSERT INTO `motor` VALUES (32, NULL, 9, 24, 63, 64, 2945, 1);
-INSERT INTO `motor` VALUES (33, NULL, 10, 8, 65, 66, 1210, 1);
-INSERT INTO `motor` VALUES (34, NULL, 10, 16, 65, 66, 2195, 1);
-INSERT INTO `motor` VALUES (35, NULL, 10, 24, 65, 66, 4210, 1);
-INSERT INTO `motor` VALUES (36, NULL, 11, NULL, NULL, NULL, 250, 1);
-INSERT INTO `motor` VALUES (37, NULL, 12, NULL, NULL, NULL, 390, 1);
-INSERT INTO `motor` VALUES (38, NULL, 13, NULL, NULL, NULL, 530, 1);
-INSERT INTO `motor` VALUES (39, NULL, 14, NULL, NULL, NULL, 325, 1);
-INSERT INTO `motor` VALUES (40, NULL, 15, NULL, NULL, NULL, 425, 1);
-INSERT INTO `motor` VALUES (41, NULL, 16, NULL, NULL, NULL, 605, 1);
+
+-- ----------------------------
+-- Table structure for metodos_de_pago
+-- ----------------------------
+DROP TABLE IF EXISTS `metodos_de_pago`;
+CREATE TABLE `metodos_de_pago`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `radio` int NULL DEFAULT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `id_tipo_medios_pago` int NULL DEFAULT NULL,
+  `activo` int NULL DEFAULT 1,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 15 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of metodos_de_pago
+-- ----------------------------
+INSERT INTO `metodos_de_pago` VALUES (1, 293, 'ONAJPU', 3, 1);
+INSERT INTO `metodos_de_pago` VALUES (2, 909, 'Promovida', 3, 0);
+INSERT INTO `metodos_de_pago` VALUES (3, 1372, 'Inspira Cobrador Domiciliario', 1, 1);
+INSERT INTO `metodos_de_pago` VALUES (4, 13721, 'MasterCard', 2, 1);
+INSERT INTO `metodos_de_pago` VALUES (5, 13722, 'Visa', 2, 1);
+INSERT INTO `metodos_de_pago` VALUES (6, 13723, 'Creditel', 2, 1);
+INSERT INTO `metodos_de_pago` VALUES (7, 13724, 'Cabal', 2, 1);
+INSERT INTO `metodos_de_pago` VALUES (8, 13725, 'Créditos Directos', 2, 1);
+INSERT INTO `metodos_de_pago` VALUES (9, 13726, 'Pass Card', 2, 1);
+INSERT INTO `metodos_de_pago` VALUES (10, 13727, 'Oca Card', 2, 1);
+INSERT INTO `metodos_de_pago` VALUES (11, 13728, 'Costa de Oro', 2, 0);
+INSERT INTO `metodos_de_pago` VALUES (12, 13729, 'Cobros Ya', 2, 1);
+INSERT INTO `metodos_de_pago` VALUES (13, 13731, 'Red Pagos', 1, 1);
+
+-- ----------------------------
+-- Table structure for numeros
+-- ----------------------------
+DROP TABLE IF EXISTS `numeros`;
+CREATE TABLE `numeros`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `numero` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `grupo` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `flag` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `no_contesta` int NULL DEFAULT NULL,
+  `dep_localidad` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `activo` int NULL DEFAULT 1,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of numeros
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for numeros_servicios
+-- ----------------------------
+DROP TABLE IF EXISTS `numeros_servicios`;
+CREATE TABLE `numeros_servicios`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_servicio` int NULL DEFAULT NULL,
+  `numero_servicio` varchar(11) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `activo` int NULL DEFAULT 1,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 23 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of numeros_servicios
+-- ----------------------------
+INSERT INTO `numeros_servicios` VALUES (1, 1, '01', 1);
+INSERT INTO `numeros_servicios` VALUES (2, 2, '02', 1);
+INSERT INTO `numeros_servicios` VALUES (3, 3, '03', 1);
+INSERT INTO `numeros_servicios` VALUES (4, 4, '06', 1);
+INSERT INTO `numeros_servicios` VALUES (5, 4, '08', 1);
+INSERT INTO `numeros_servicios` VALUES (6, 5, '07', 1);
+INSERT INTO `numeros_servicios` VALUES (7, 6, '09', 1);
+INSERT INTO `numeros_servicios` VALUES (8, 6, '110', 1);
+INSERT INTO `numeros_servicios` VALUES (9, 7, '16', 1);
+INSERT INTO `numeros_servicios` VALUES (10, 7, '17', 1);
+INSERT INTO `numeros_servicios` VALUES (11, 8, '37', 1);
+INSERT INTO `numeros_servicios` VALUES (12, 9, '46', 1);
+INSERT INTO `numeros_servicios` VALUES (13, 10, '52', 1);
+INSERT INTO `numeros_servicios` VALUES (14, 11, '56', 1);
+INSERT INTO `numeros_servicios` VALUES (15, 12, '59', 1);
+INSERT INTO `numeros_servicios` VALUES (16, 13, '63', 1);
+INSERT INTO `numeros_servicios` VALUES (17, 14, '64', 0);
+INSERT INTO `numeros_servicios` VALUES (18, 15, '65', 1);
+INSERT INTO `numeros_servicios` VALUES (19, 16, '66', 0);
+INSERT INTO `numeros_servicios` VALUES (20, 17, '82', 1);
+INSERT INTO `numeros_servicios` VALUES (21, 18, '106', 1);
+INSERT INTO `numeros_servicios` VALUES (22, 19, '114', 1);
+
+-- ----------------------------
+-- Table structure for precios_promo_estaciones
+-- ----------------------------
+DROP TABLE IF EXISTS `precios_promo_estaciones`;
+CREATE TABLE `precios_promo_estaciones`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `horas` int NULL DEFAULT NULL,
+  `precio` int NULL DEFAULT NULL,
+  `activo` int NULL DEFAULT 1,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = FIXED;
+
+-- ----------------------------
+-- Records of precios_promo_estaciones
+-- ----------------------------
+INSERT INTO `precios_promo_estaciones` VALUES (1, 8, 530, 1);
+INSERT INTO `precios_promo_estaciones` VALUES (2, 16, 1060, 1);
+INSERT INTO `precios_promo_estaciones` VALUES (3, 24, 1590, 1);
 
 -- ----------------------------
 -- Table structure for promociones
 -- ----------------------------
 DROP TABLE IF EXISTS `promociones`;
 CREATE TABLE `promociones`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `numero_promo` int NULL DEFAULT NULL,
   `nombre_promocion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `porcentaje` int(11) NULL DEFAULT NULL,
-  `activo` int(1) NULL DEFAULT 1,
+  `activo` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of promociones
 -- ----------------------------
-INSERT INTO `promociones` VALUES (1, 'NP', 50, 1);
-INSERT INTO `promociones` VALUES (2, 'PCI Bienestar', 75, 1);
-INSERT INTO `promociones` VALUES (3, 'PCI Competencia', 50, 1);
+INSERT INTO `promociones` VALUES (1, 20, 'NP (2017)', 1);
+INSERT INTO `promociones` VALUES (2, 22, 'PCI', 1);
+INSERT INTO `promociones` VALUES (3, 73, 'PCI - Bienestar y Asistir', 1);
+
+-- ----------------------------
+-- Table structure for rutas_cobrador
+-- ----------------------------
+DROP TABLE IF EXISTS `rutas_cobrador`;
+CREATE TABLE `rutas_cobrador`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `sucursal` varchar(5) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `radio` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `ruta` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `localidad` varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `cobrador` varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `emision` int NULL DEFAULT 1,
+  `tipo_contrato` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `activo` int NULL DEFAULT 1,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Records of rutas_cobrador
+-- ----------------------------
+INSERT INTO `rutas_cobrador` VALUES (1, '1372', '13721', '0000000000', 'MasterCard', 'MASTERCARD', 1, 'CENTRALIZADO', 1);
+INSERT INTO `rutas_cobrador` VALUES (2, '1372', '13722', '0000000000', 'Visa', 'VISA', 1, 'CENTRALIZADO', 1);
+INSERT INTO `rutas_cobrador` VALUES (3, '1372', '13723', '0000000000', 'Creditel', 'CREDITEL', 1, 'CENTRALIZADO', 1);
+INSERT INTO `rutas_cobrador` VALUES (4, '1372', '13724', '0000000000', 'Cabal', 'CABAL', 1, 'CENTRALIZADO', 1);
+INSERT INTO `rutas_cobrador` VALUES (5, '1372', '13725', '0000000000', 'Créditos Directos', 'CREDITOS DIRECTOS', 1, 'CENTRALIZADO', 1);
+INSERT INTO `rutas_cobrador` VALUES (6, '1372', '13726', '0000000000', 'Pass Card', 'PASS CARD', 1, 'CENTRALIZADO', 1);
+INSERT INTO `rutas_cobrador` VALUES (7, '1372', '13727', '0000000000', 'Oca Card', 'OCA CARD', 1, 'CENTRALIZADO', 1);
+INSERT INTO `rutas_cobrador` VALUES (8, '1372', '1372', '0000000000', 'Colonia', 'FILIAL INSPIRA', 1, 'COBRANZA EMPLEADO', 1);
+INSERT INTO `rutas_cobrador` VALUES (9, '1372', '1372', '00000000Z1', 'Colonia', 'DANIEL DURAN', 1, 'COBRANZA EMPLEADO', 1);
+INSERT INTO `rutas_cobrador` VALUES (10, '1372', '1372', '00000000Z2', 'Colonia', 'JACINTO LEMOS', 1, 'COBRANZA EMPLEADO', 1);
+INSERT INTO `rutas_cobrador` VALUES (11, '1372', '1372', '00000000MB', 'Ombúes de Lavalle', 'SEBASTIAN OLIVERA', 1, 'COBRANZA EMPLEADO', 1);
+INSERT INTO `rutas_cobrador` VALUES (12, '1372', '1372', '00000000JL', 'Juan Lacaze', 'MARCELA PINTOS', 1, 'COBRANZA EMPLEADO', 1);
+INSERT INTO `rutas_cobrador` VALUES (13, '1372', '1372', '00000000RO', 'Rosario', 'LUIS DE LEON', 1, 'COBRANZA EMPLEADO', 1);
+INSERT INTO `rutas_cobrador` VALUES (14, '1372', '1372', '0000000CA2', 'Nueva Palmira', 'WALTER GONZALEZ', 1, 'COBRANZA EMPLEADO', 1);
+INSERT INTO `rutas_cobrador` VALUES (15, '1372', '1372', '0000000RO2', 'Nueva Helvecia', 'LUIS DE LEON', 1, 'COBRANZA TERCERIZADA', 1);
+INSERT INTO `rutas_cobrador` VALUES (16, '1372', '1372', '0000000RO3', 'Colonia Valdense', 'LUIS DE LEON', 1, 'COBRANZA TERCERIZADA', 1);
+INSERT INTO `rutas_cobrador` VALUES (17, '1372', '1372', '0000000RO4', 'Miguelete', 'LUIS DE LEON', 1, 'COBRANZA TERCERIZADA', 1);
+INSERT INTO `rutas_cobrador` VALUES (18, '1372', '1372', '00000000TA', 'Tarariras', 'CLAUDIA CABRERA', 1, 'COBRANZA TERCERIZADA', 1);
+INSERT INTO `rutas_cobrador` VALUES (19, '1372', '1372', '0000000RO8', 'La Paz', 'LUIS DE LEON', 1, 'COBRANZA TERCERIZADA', 1);
+INSERT INTO `rutas_cobrador` VALUES (20, '1372', '1372', '00000000LB', 'Libertad San José', '', 1, '', 0);
+INSERT INTO `rutas_cobrador` VALUES (21, '1372', '1372', '00000000EP', 'Ecilda Paullier San José', '', 1, '', 0);
+INSERT INTO `rutas_cobrador` VALUES (22, '1372', '1372', '0000000CA4', 'Conchillas', 'SEBASTIAN OLIVERA', 1, 'COBRANZA EMPLEADO', 1);
+INSERT INTO `rutas_cobrador` VALUES (23, '1372', '1372', '0000000CA1', 'Carmelo', 'MARIA DE LOS ANGELES PERRETTI', 1, 'COBRANZA EMPLEADO', 1);
+INSERT INTO `rutas_cobrador` VALUES (24, '1372', '1372', '000000SEMI      ', 'Semillero Tarariras', '', 1, '', 0);
+INSERT INTO `rutas_cobrador` VALUES (25, '1372', '1372', '00000000ET', 'La Estanzuela', '', 1, '', 0);
+INSERT INTO `rutas_cobrador` VALUES (26, '1372', '13728', '00000000BC', 'Barras de carrasco', 'DOMINGO PIREZ', 1, 'COBRANZA TERCERIZADA', 0);
+INSERT INTO `rutas_cobrador` VALUES (27, '1372', '13728', '00000000PC', 'Paso Carrasco', 'DOMINGO PIREZ', 1, 'COBRANZA TERCERIZADA', 0);
+INSERT INTO `rutas_cobrador` VALUES (28, '1372', '13728', '0000000ATL', 'Atlantida', 'DOMINGO PIREZ', 1, 'COBRANZA TERCERIZADA', 0);
+INSERT INTO `rutas_cobrador` VALUES (29, '1372', '13728', '0000000FLO', 'Floresta', 'DOMINGO PIREZ', 1, 'COBRANZA TERCERIZADA', 0);
+INSERT INTO `rutas_cobrador` VALUES (30, '1372', '13728', '0000000LAG', 'Lagomar', 'DOMINGO PIREZ', 1, 'COBRANZA TERCERIZADA', 0);
+INSERT INTO `rutas_cobrador` VALUES (31, '1372', '13728', '0000000MAR', 'Marindia', 'DOMINGO PIREZ', 1, 'COBRANZA TERCERIZADA', 0);
+INSERT INTO `rutas_cobrador` VALUES (32, '1372', '13728', '0000000NEP', 'Neptunia', 'DOMINGO PIREZ', 1, 'COBRANZA TERCERIZADA', 0);
+INSERT INTO `rutas_cobrador` VALUES (33, '1372', '13728', '0000000PIN', 'Pinar', 'DOMINGO PIREZ', 1, 'COBRANZA TERCERIZADA', 0);
+INSERT INTO `rutas_cobrador` VALUES (34, '1372', '13728', '0000000SAL', 'Salinas', 'DOMINGO PIREZ', 1, 'COBRANZA TERCERIZADA', 0);
+INSERT INTO `rutas_cobrador` VALUES (35, '1372', '13728', '0000000SAN', 'San Luis', 'DOMINGO PIREZ', 1, 'COBRANZA TERCERIZADA', 0);
+INSERT INTO `rutas_cobrador` VALUES (36, '1372', '13728', '0000000SHA', 'Shangrila', 'DOMINGO PIREZ', 1, 'COBRANZA TERCERIZADA', 0);
+INSERT INTO `rutas_cobrador` VALUES (37, '1372', '13728', '0000000SJC', 'San José De Carrasco', 'DOMINGO PIREZ', 1, 'COBRANZA TERCERIZADA', 0);
+INSERT INTO `rutas_cobrador` VALUES (38, '1372', '13728', '0000000SOL', 'Solimar', 'DOMINGO PIREZ', 1, 'COBRANZA TERCERIZADA', 0);
+INSERT INTO `rutas_cobrador` VALUES (39, '1372', '13728', '000000PINA', 'Pinamar', 'DOMINGO PIREZ', 1, 'COBRANZA TERCERIZADA', 0);
+INSERT INTO `rutas_cobrador` VALUES (40, '1372', '13728', '000000PQUE', 'Parque del plata', 'DOMINGO PIREZ', 1, 'COBRANZA TERCERIZADA', 0);
+INSERT INTO `rutas_cobrador` VALUES (41, '1372', '1372', '0000000RO5', 'Cufré', 'LUIS DE LEON', 1, 'COBRANZA TERCERIZADA', 1);
+INSERT INTO `rutas_cobrador` VALUES (42, '1372', '1372', '000AJUPECS', 'AJUPECS', 'CUALQUIER COBRADOR', 1, '', 1);
+INSERT INTO `rutas_cobrador` VALUES (43, '1372', '1372', '0000000JL1', 'Juan Lacaze', 'GABRIELA ALVARIÑO', 1, 'COBRANZA EMPLEADO', 1);
+INSERT INTO `rutas_cobrador` VALUES (44, '1372', '1372', '00000000CA', 'CARDONA', 'SERGIO ARABEITY', 1, 'COBRANZA TERCERIZADA', 0);
+INSERT INTO `rutas_cobrador` VALUES (45, '1372', '1372', '0000000FJL', 'Juan Lacaze', 'FILIAL INSPIRA JUAN LACAZE', 1, 'COBRANZA EMPLEADO', 1);
+INSERT INTO `rutas_cobrador` VALUES (46, '1372', '293', '0000000000', 'ONAJPU', 'ONAJPU', 1, 'CENTRALIZADO', 1);
+INSERT INTO `rutas_cobrador` VALUES (47, '1372', '13729', '0000000000', 'Cobros Ya', 'Cobros Ya', 1, NULL, 1);
+INSERT INTO `rutas_cobrador` VALUES (48, '1372', '13731', '0000000000', 'Red Pagos', 'Red Pagos', 1, NULL, 1);
 
 -- ----------------------------
 -- Table structure for servicio_promos
 -- ----------------------------
 DROP TABLE IF EXISTS `servicio_promos`;
 CREATE TABLE `servicio_promos`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_servicio` int(11) NULL DEFAULT NULL,
-  `id_promo` int(11) NULL DEFAULT NULL,
-  `activo` int(1) NULL DEFAULT 1,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_servicio` int NULL DEFAULT NULL,
+  `id_promo` int NULL DEFAULT NULL,
+  `activo` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = FIXED;
 
 -- ----------------------------
 -- Records of servicio_promos
 -- ----------------------------
 INSERT INTO `servicio_promos` VALUES (1, 1, 1, 1);
-INSERT INTO `servicio_promos` VALUES (2, 2, 1, 1);
-INSERT INTO `servicio_promos` VALUES (3, 3, 2, 1);
-INSERT INTO `servicio_promos` VALUES (4, 3, 3, 1);
+INSERT INTO `servicio_promos` VALUES (2, 1, 2, 1);
+INSERT INTO `servicio_promos` VALUES (3, 8, 2, 1);
+INSERT INTO `servicio_promos` VALUES (4, 9, 2, 1);
 
 -- ----------------------------
 -- Table structure for servicios
 -- ----------------------------
 DROP TABLE IF EXISTS `servicios`;
 CREATE TABLE `servicios`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `nro_servicio` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `nombre_servicio` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `horas_servicio` int(1) NULL DEFAULT 1,
-  `activo` int(1) NULL DEFAULT 1,
+  `horas_servicio` int NULL DEFAULT 1,
+  `importe_manual` int NULL DEFAULT 0,
+  `activo` int NULL DEFAULT 1,
+  `mostrar` int NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of servicios
 -- ----------------------------
-INSERT INTO `servicios` VALUES (1, '01', 'Sanatorio', 1, 1);
-INSERT INTO `servicios` VALUES (2, '02', 'Convalecencia', 1, 1);
-INSERT INTO `servicios` VALUES (3, '46', 'PCI', 1, 1);
-INSERT INTO `servicios` VALUES (4, '37', 'AJUPECS', 1, 1);
-INSERT INTO `servicios` VALUES (5, '37', 'SAJUPEN', 1, 1);
-INSERT INTO `servicios` VALUES (6, NULL, 'Promo Estaciones', 1, 1);
-INSERT INTO `servicios` VALUES (7, '06 / 08', 'Reintegro Opcional', 0, 1);
-INSERT INTO `servicios` VALUES (8, '07', 'Reintegro Conjunto', 0, 1);
-INSERT INTO `servicios` VALUES (9, NULL, 'Grupo Familiar x5', 1, 1);
-INSERT INTO `servicios` VALUES (10, NULL, 'Grupo Familiar x6', 1, 1);
-INSERT INTO `servicios` VALUES (11, NULL, 'Funcionario', 0, 1);
-INSERT INTO `servicios` VALUES (12, '56', 'Inspira Plus', 0, 1);
-INSERT INTO `servicios` VALUES (13, NULL, 'Adeon', 0, 1);
-INSERT INTO `servicios` VALUES (14, '59', 'Prevencion 2', 0, 1);
-INSERT INTO `servicios` VALUES (15, '106', 'Amparo Optativo', 0, 1);
-INSERT INTO `servicios` VALUES (16, '09 / 110', 'SATS', 0, 1);
+INSERT INTO `servicios` VALUES (1, '01', 'Sanatorio', 1, 0, 1, 1);
+INSERT INTO `servicios` VALUES (2, '02', 'Convalecencia', 1, 0, 1, 1);
+INSERT INTO `servicios` VALUES (3, '03', 'Domicilio Especial', 1, 0, 0, 0);
+INSERT INTO `servicios` VALUES (4, '06', 'Reintegro Opcional', 0, 0, 1, 1);
+INSERT INTO `servicios` VALUES (5, '07', 'Reintegro Conjunto', 0, 0, 1, 1);
+INSERT INTO `servicios` VALUES (6, '09', 'Inspira SATS', 0, 0, 1, 1);
+INSERT INTO `servicios` VALUES (7, '16', 'SIMC (Sanatorio + Emergencia)', 1, 0, 0, 0);
+INSERT INTO `servicios` VALUES (8, '37', 'Inspira Ajupecs y Sojupen / Adeom', 1, 0, 1, 1);
+INSERT INTO `servicios` VALUES (9, '46', 'Inspira PCI (Promo Competencia)', 1, 0, 1, 1);
+INSERT INTO `servicios` VALUES (10, '52', 'Inspira (Funcionarios publicos menos de 50)', 0, 0, 1, 1);
+INSERT INTO `servicios` VALUES (11, '56', 'Inspira Plus', 0, 0, 1, 1);
+INSERT INTO `servicios` VALUES (12, '59', 'Prevencion 2', 0, 0, 1, 1);
+INSERT INTO `servicios` VALUES (13, '63', 'G5 - Grupo Familiar 1', 1, 0, 1, 1);
+INSERT INTO `servicios` VALUES (14, '64', 'Grupo Familiar 1 - Beneficiario', 0, 0, 1, 0);
+INSERT INTO `servicios` VALUES (15, '65', 'G6 - Grupo Familiar 2', 1, 0, 1, 1);
+INSERT INTO `servicios` VALUES (16, '66', 'Grupo Familiar 2 - Beneficiario', 0, 0, 1, 0);
+INSERT INTO `servicios` VALUES (17, '82', 'Mega Promo Bienestar', 0, 1, 1, 1);
+INSERT INTO `servicios` VALUES (18, '106', 'Amparo Optativo', 0, 0, 1, 1);
+INSERT INTO `servicios` VALUES (19, '114', 'GYM COCO', 0, 0, 1, 1);
+INSERT INTO `servicios` VALUES (20, '08', 'Reintegro Opcional Doble', 1, 0, 1, 0);
+INSERT INTO `servicios` VALUES (21, '110', 'Inspira SATS Doble', 1, 0, 1, 0);
+INSERT INTO `servicios` VALUES (22, '17', 'SIMC (Sanatorio + Emergencia) Doble', 1, 0, 0, 0);
 
 -- ----------------------------
--- View structure for v_ciudades
+-- Table structure for tipo_medios_pago
 -- ----------------------------
-DROP VIEW IF EXISTS `v_ciudades`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_ciudades` AS select `c`.`id` AS `c_id`,`c`.`nombre` AS `ciudad`,`c`.`id_departamento` AS `id_departamento`,`c`.`id_filial` AS `id_filial`,`d`.`id` AS `d_id`,`d`.`nombre` AS `departamento`,`d`.`id_pais` AS `d_id_pais`,`p`.`id` AS `p_id`,`p`.`pais` AS `pais`,`f`.`id` AS `f_id`,`f`.`nro_filial` AS `nro_filial`,`f`.`nombre_filial` AS `nombre_filial`,`f`.`mostrar` AS `mostrar`,`f`.`id_pais` AS `f_id_pais` from (((`ciudades` `c` join `departamentos` `d` on((`c`.`id_departamento` = `d`.`id`))) join `paises` `p` on((`d`.`id_pais` = `p`.`id`))) join `filiales` `f` on(((`c`.`id_filial` = `f`.`id`) and (`p`.`id` = `f`.`id_pais`))));
+DROP TABLE IF EXISTS `tipo_medios_pago`;
+CREATE TABLE `tipo_medios_pago`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `nombre_comercial` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `mostrar` int NULL DEFAULT 1,
+  `activo` int NULL DEFAULT 1,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- View structure for v_franjas_filiales
+-- Records of tipo_medios_pago
 -- ----------------------------
-DROP VIEW IF EXISTS `v_franjas_filiales`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_franjas_filiales` AS select `ff`.`id` AS `ff_id`,`ff`.`id_filial` AS `id_filial`,`ff`.`id_franja_etaria` AS `id_franja_etaria`,`f`.`id` AS `f_id`,`f`.`nro_filial` AS `nro_filial`,`f`.`nombre_filial` AS `nombre_filial`,`f`.`mostrar` AS `mostrar`,`f`.`id_pais` AS `id_pais`,`p`.`id` AS `p_id`,`p`.`pais` AS `pais`,`fe`.`id` AS `fe_id`,`fe`.`desde` AS `desde`,`fe`.`hasta` AS `hasta`,`fe`.`descripcion` AS `descripcion` from (((`franjas_filiales` `ff` join `filiales` `f` on((`ff`.`id_filial` = `f`.`id`))) join `paises` `p` on((`f`.`id_pais` = `p`.`id`))) join `franjas_etarias` `fe` on((`ff`.`id_franja_etaria` = `fe`.`id`)));
-
--- ----------------------------
--- View structure for v_promociones
--- ----------------------------
-DROP VIEW IF EXISTS `v_promociones`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_promociones` AS select `p`.`id` AS `p_id`,`p`.`id_filial` AS `p_filial`,`p`.`id_servicio` AS `id_servicio`,`p`.`id_franja_etaria` AS `p_franja_etaria`,`p`.`id_franja_filial` AS `id_franja_filial`,`p`.`porcentaje` AS `porcentaje`,`p`.`activo` AS `activo`,`f`.`id` AS `f_id`,`f`.`nro_filial` AS `nro_filial`,`f`.`nombre_filial` AS `nombre_filial`,`f`.`mostrar` AS `f_mostrar`,`f`.`id_pais` AS `id_pais`,`s`.`id` AS `s_id`,`s`.`nro_servicio` AS `nro_servicio`,`s`.`nombre_servicio` AS `nombre_servicio`,`s`.`mostrar` AS `s_mostrar`,`s`.`precio_base` AS `precio_base`,`ff`.`id` AS `ff_id`,`ff`.`id_filial` AS `ff_filial`,`ff`.`id_franja_etaria` AS `ff_franja_etaria`,`pa`.`id` AS `pa_id`,`pa`.`pais` AS `pais` from (((((`promociones` `p` join `filiales` `f` on((`p`.`id_filial` = `f`.`id`))) join `servicios` `s` on((`p`.`id_servicio` = `s`.`id`))) join `franjas_filiales` `ff` on(((`ff`.`id_filial` = `f`.`id`) and (`p`.`id_franja_filial` = `ff`.`id`)))) join `franjas_etarias` `fe` on(((`p`.`id_franja_etaria` = `fe`.`id`) and (`ff`.`id_franja_etaria` = `fe`.`id`)))) join `paises` `pa` on((`pa`.`id` = `f`.`id_pais`)));
-
--- ----------------------------
--- View structure for v_vista_general
--- ----------------------------
-DROP VIEW IF EXISTS `v_vista_general`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_vista_general` AS select `tf`.`id` AS `tf_id`,`tf`.`id_franja_filial` AS `id_franja_filial`,`tf`.`id_servicio` AS `id_servicio`,`tf`.`precio` AS `precio`,`ff`.`id` AS `ff_id`,`ff`.`id_filial` AS `id_filial`,`ff`.`id_franja_etaria` AS `id_franja_etaria`,`f`.`id` AS `f_id`,`f`.`nro_filial` AS `nro_filial`,`f`.`nombre_filial` AS `nombre_filial`,`f`.`mostrar` AS `f_mostrar`,`f`.`id_pais` AS `id_pais`,`p`.`id` AS `p_id`,`p`.`pais` AS `pais`,`fe`.`id` AS `fe_id`,`fe`.`desde` AS `desde`,`fe`.`hasta` AS `hasta`,`fe`.`descripcion` AS `descripcion`,`s`.`id` AS `s_id`,`s`.`nro_servicio` AS `nro_servicio`,`s`.`nombre_servicio` AS `nombre_servicio`,`s`.`mostrar` AS `s_mostrar`,`s`.`precio_base` AS `precio_base` from (((((`tabla_final` `tf` left join `franjas_filiales` `ff` on((`ff`.`id` = `tf`.`id_franja_filial`))) left join `filiales` `f` on((`f`.`id` = `ff`.`id_filial`))) left join `paises` `p` on((`p`.`id` = `f`.`id_pais`))) left join `franjas_etarias` `fe` on((`fe`.`id` = `ff`.`id_franja_etaria`))) join `servicios` `s` on((`s`.`id` = `tf`.`id_servicio`)));
+INSERT INTO `tipo_medios_pago` VALUES (1, 'Domiciliario', 'Cobrador', 1, 1);
+INSERT INTO `tipo_medios_pago` VALUES (2, 'Centralizado', 'Tarjeta', 1, 1);
+INSERT INTO `tipo_medios_pago` VALUES (3, 'Convenio', 'Convenio', 1, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
