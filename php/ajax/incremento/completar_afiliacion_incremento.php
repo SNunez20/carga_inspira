@@ -102,8 +102,7 @@ function modificar_padron_socios($opcion, $datos_actuales_padron)
     $anio_e_anterior = $datos_actuales_padron['anio_e'];
     $mes_e_anterior = $datos_actuales_padron['mes_e'];
     $nombre_titular_anterior = $datos_actuales_padron['nombre_titular'];
-    $importe_total_anterior = $datos_actuales_padron['importe_total'];
-    $fecha_afiliacion = $datos_actuales_padron['fechafil'];
+    $importe_total_anterior = $datos_actuales_padron['total_importe'];
 
     $observacion = $_REQUEST['observacion'];
     $id_metodo_pago = $_REQUEST['id_metodo_pago'];
@@ -139,7 +138,6 @@ function modificar_padron_socios($opcion, $datos_actuales_padron)
     $banco_emisor = count($array_tarjeta_titular) > 0 ? $array_tarjeta_titular["banco_emisor"] : 0;
     $cedula_titular = (count($array_tarjeta_titular) > 0) ? $array_tarjeta_titular["cedula_titular"] : 0;
     $nombre_titular = count($array_tarjeta_titular) > 0 ? $array_tarjeta_titular["nombre_titular"] : 0;
-    $nombre_titular = (count($array_tarjeta_titular) > 0) ? $array_tarjeta_titular["nombre_titular"] : 0;
     $mes_vencimiento = count($array_tarjeta_titular) > 0 ? $array_tarjeta_titular["mes_vencimiento"] : 0;
     $anio_vencimiento = count($array_tarjeta_titular) > 0 ? $array_tarjeta_titular["anio_vencimiento"] : 0;
     $email_titular = count($array_tarjeta_titular) > 0 ? $array_tarjeta_titular["email_titular"] : "";
@@ -199,50 +197,30 @@ function modificar_padron_socios($opcion, $datos_actuales_padron)
     try {
         $sql = "UPDATE {$tabla} SET
                  nombre = '$nombre_completo',
-                 tel = '$tel_titular',
+                 tel = '$tel',
                  direccion = '$direccion',
                  sucursal = '$sucursal',
                  ruta = '$ruta',
                  radio = '$radio',
-                 activo = 1,
                  fecha_nacimiento = '$fecha_nacimiento',
                  edad = '$edad',
-                 tarjeta
+                 tarjeta = '$tipo_tarjeta',
                  tipo_tarjeta = '$tipo_tarjeta',
                  numero_tarjeta = '$numero_tarjeta',
-                 nombre_titular
-                 cedula_titular
-                 telefono_titular
-                 anio_e
-                 mes_e
-                 sucursal_cobranzas
-                 sucursal_cobranza_num
-                 empresa_marca
-                 flag
-                 count
-                 observaciones
-                 grupo
+                 nombre_titular = '$nombre_titular',
+                 cedula_titular = '$cedula_titular',
+                 telefono_titular = '$tel_titular',
+                 anio_e = '$anio_vencimiento',
+                 mes_e = '$mes_vencimiento',
+                 sucursal_cobranzas = '$sucursal_cobranzas',
+                 sucursal_cobranza_num = '$sucursal_cobranza_num',
+                 empresa_marca = '$empresa_marca',
+                 observaciones = '$observacion',
                  idrelacion = '$id_relacion',
                  empresa_rut = '$empresa_rut',
                  total_importe = '$importe_total',
-                 nactual
-                 `version`
-                 flagchange
                  rutcentralizado = '$rutcentralizado',
-                 `PRINT` = '$print',
-                 EMITIDO = 1,
-                 movimientoabm = 'ALTA',
-                 abm = 'ALTA',
-                 abmactual = 1
-                 `check`
-                 usuario
-                 usuariod
-                 fechafil = '$fecha_afiliacion',
-                 radioViejo = 0,
-                 extra = 0,
-                 nomodifica = 0,
-                 origenVta
-                 imp_desc
+                 `PRINT` = '$print'
                 WHERE
                  `cedula` = '$cedula'";
         $consulta = mysqli_query($conexion, $sql);
