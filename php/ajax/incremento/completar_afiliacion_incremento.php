@@ -27,11 +27,13 @@ $existe_socio_padron = comprobar_existe_socio(2, $cedula);
 if ($existe_socio_padron == false) devolver_error("Ocurrieron errores al verificar si existe el socio en padrón");
 $cantidad_socio_padron = mysqli_num_rows($existe_socio_padron);
 if ($cantidad_socio_padron <= 0) devolver_error("No se pudo encontrar el socio en padrón");
-$id_socio_padron = mysqli_fetch_assoc($existe_socio_padron)['id'];
+
+$datos_actuales_padron = mysqli_fetch_assoc($existe_socio_padron);
+$id_socio_padron = $datos_actuales_padron['id'];
 
 
 /** Si el socio esta en padrón, se actualizan los datos **/
-$modificar_padron_socios = modificar_padron_socios(2, $existe_socio_padron);
+$modificar_padron_socios = modificar_padron_socios(2, $datos_actuales_padron);
 if ($modificar_padron_socios == false) devolver_error("Ocurrieron errores al actualizar los datos del socio en padrón");
 
 
@@ -89,22 +91,24 @@ function comprobar_existe_socio($opcion, $cedula)
 
 
 /** Función para actualizar los datos del socio */
-function modificar_padron_socios($opcion, $consulta_padron)
+function modificar_padron_socios($opcion, $datos_actuales_padron)
 {
     $conexion = $opcion == 1 ? connection(DB_CALL, false) : connection(DB_ABMMOD, false);
     $tabla = TABLA_PADRON_DATOS_SOCIO;
 
-    $datos_actuales_padron = mysqli_fetch_assoc($consulta_padron);
-    $medio_pago_anterior = $datos_actuales_padron['metodo_pago'];
+
+    $radio = $datos_actuales_padron['radio'];
+    $medio_pago_anterior = obtener_metodo_pago($radio);
     $anio_e_anterior = $datos_actuales_padron['anio_e'];
     $mes_e_anterior = $datos_actuales_padron['mes_e'];
     $nombre_titular_anterior = $datos_actuales_padron['nombre_titular'];
-
+    $importe_total_anterior = $datos_actuales_padron['importe_total'];
+    $fecha_afiliacion = $datos_actuales_padron['fechafil'];
 
     $observacion = $_REQUEST['observacion'];
     $id_metodo_pago = $_REQUEST['id_metodo_pago'];
     $metodo_pago = $_REQUEST['metodo_pago'];
-    $importe_total = $_REQUEST['importe_total'];
+    $importe_total = $_REQUEST['importe_total'] + $importe_total_anterior;
     $convenio = $_REQUEST['convenio'];
 
     /** Datos del beneficiario **/
@@ -178,7 +182,7 @@ function modificar_padron_socios($opcion, $consulta_padron)
 
     $accion_socio = '3';
     $print = 0;
-    
+
     if ($medio_pago_anterior && $medio_pago_anterior != $metodo_pago) {
         $accion_socio = '4';
         if ($metodo_pago == '1') $print = 1;
@@ -195,65 +199,50 @@ function modificar_padron_socios($opcion, $consulta_padron)
     try {
         $sql = "UPDATE {$tabla} SET
                  nombre = '$nombre_completo',
-                 tel = '$tel',
+                 tel = '$tel_titular',
                  direccion = '$direccion',
                  sucursal = '$sucursal',
                  ruta = '$ruta',
                  radio = '$radio',
-                 activo = '1',
+                 activo = 1,
                  fecha_nacimiento = '$fecha_nacimiento',
                  edad = '$edad',
-                 tarjeta = '$tipo_tarjeta',
+                 tarjeta
                  tipo_tarjeta = '$tipo_tarjeta',
                  numero_tarjeta = '$numero_tarjeta',
-                 nombre_titular = '$nombre_titular',
-                 cedula_titular = '$cedula_titular',
-                 telefono_titular = '$tel_titular',
-                 anio_e = '$anio_vencimiento',
-                 mes_e = '$mes_vencimiento',
-                 cuotas_mercadopago = '0', 
-                 sucursal_cobranzas = '$sucursal_cobranzas',
-                 sucursal_cobranza_num = '$sucursal_cobranza_num',
-                 empresa_marca = '$empresa_marca',
-                 flag = '1',
-                 count = '0',
-                 observaciones = '$observacion',
-                 grupo = '0',
+                 nombre_titular
+                 cedula_titular
+                 telefono_titular
+                 anio_e
+                 mes_e
+                 sucursal_cobranzas
+                 sucursal_cobranza_num
+                 empresa_marca
+                 flag
+                 count
+                 observaciones
+                 grupo
                  idrelacion = '$id_relacion',
                  empresa_rut = '$empresa_rut',
                  total_importe = '$importe_total',
-                 nactual = '1',
-                 `version` = '1',
-                 flagchange = '1',
+                 nactual
+                 `version`
+                 flagchange
                  rutcentralizado = '$rutcentralizado',
                  `PRINT` = '$print',
-                 EMITIDO = '1',
+                 EMITIDO = 1,
                  movimientoabm = 'ALTA',
                  abm = 'ALTA',
-                 abmactual = '1',
-                 `check` = '0',
-                 usuario = '0',
-                 usuariod = '0',
-                 fechafil = NOW(),
-                 radioViejo = '0',
-                 extra = '0',
-                 nomodifica = '0',
-                 metodo_pago = '$metodo_pago',
-                 cvv = '$cvv_tarjeta',
-                 existe_padron = '1',
-                 email = '$correo_electronico',
-                 email_titular = '$email_titular',
-                 tarjeta_vida = '1',
-                 banco_emisor = '$banco_emisor',
-                 accion = '$accion_socio',
-                 estado = '1',
-                 localidad = '$id_localidad',
-                 dato_extra = '3',
-                 llamada_entrante = '0',
-                 origen_venta = '0',
-                 alta = '0',
-                 es_admin = '0',
-                 id_usuario = '0'
+                 abmactual = 1
+                 `check`
+                 usuario
+                 usuariod
+                 fechafil = '$fecha_afiliacion',
+                 radioViejo = 0,
+                 extra = 0,
+                 nomodifica = 0,
+                 origenVta
+                 imp_desc
                 WHERE
                  `cedula` = '$cedula'";
         $consulta = mysqli_query($conexion, $sql);
