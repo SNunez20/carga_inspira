@@ -28,7 +28,7 @@ while ($row = mysqli_fetch_assoc($servicios_actuales)) {
     $horas = $row['horas'];
     $importe = $row['importe'];
     $cod_promo = $row['cod_promo'];
-    $nombre_promo = $cod_promo != "" ? obtener_nombre_promo($cod_promo) : "";
+    $nombre_promo = in_array($cod_promo, ["", null]) ? obtener_nombre_promo($cod_promo) : "";
     $cod_promo = $cod_promo != "" ? "- 🚀 $nombre_promo" : "";
     $promo_estaciones = 0;
     if ($numero_servicio == "01" && in_array($importe, ["530", "1060", "1590"])) $promo_estaciones++;

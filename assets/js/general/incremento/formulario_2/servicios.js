@@ -14,7 +14,10 @@ function mostrar_divs_servicios_incremento(servicio) {
     success: function (response) {
       if (response.error == false) {
         if (response.mostrar_horas == 1) {
-          select_cantidad_horas(servicio, "select_cantidad_horas_servicios_incremento");
+          select_cantidad_horas(
+            servicio,
+            "select_cantidad_horas_servicios_incremento"
+          );
           $(".div_cantidad_horas_servicios_incremento").css("display", "block");
         } else {
           $(".div_cantidad_horas_servicios_incremento").css("display", "none");
@@ -43,14 +46,20 @@ function mostrar_divs_servicios_incremento(servicio) {
           $("#chbox_socio_adeom_incremento").prop("checked", false);
           $("#chbox_socio_adeom_incremento").click(function () {
             if ($("#chbox_socio_adeom_incremento").is(":checked")) {
-              mostrar_promociones_incremento(response.mostrar_promociones, servicio);
+              mostrar_promociones_incremento(
+                response.mostrar_promociones,
+                servicio
+              );
             } else {
               $(".div_promocion_servicios_incremento").css("display", "none");
             }
           });
         } else {
           $(".div_socio_adeom_incremento").css("display", "none");
-          mostrar_promociones_incremento(response.mostrar_promociones, servicio);
+          mostrar_promociones_incremento(
+            response.mostrar_promociones,
+            servicio
+          );
 
           if (response.mostrar_div_importe_total == 1) {
             $("#txt_importe_total_servicios_incremento").val("");
@@ -60,12 +69,10 @@ function mostrar_divs_servicios_incremento(servicio) {
             $(".div_ingresar_importe_total_incremento").css("display", "none");
           }
         }
-
       }
-    }
+    },
   });
 }
-
 
 function mostrar_promociones_incremento(res_mostrar_promociones, servicio) {
   if (res_mostrar_promociones == 1) {
@@ -76,7 +83,6 @@ function mostrar_promociones_incremento(res_mostrar_promociones, servicio) {
     $(".div_promocion_servicios_incremento").css("display", "none");
   }
 }
-
 
 function select_promociones_servicios_incremento(servicio) {
   let html = `<option value="" selected>Seleccione una opción</option>`;
@@ -105,15 +111,22 @@ function select_promociones_servicios_incremento(servicio) {
 
 function agregar_servicio_incremento() {
   let nro_servicio = $("#select_servicios_servicios_incremento").val();
-  let nombre_servicio = $("#select_servicios_servicios_incremento option:selected").text();
-  let cant_horas_visible = $("#select_cantidad_horas_servicios_incremento").is(":visible");
+  let nombre_servicio = $(
+    "#select_servicios_servicios_incremento option:selected"
+  ).text();
+  let cant_horas_visible = $("#select_cantidad_horas_servicios_incremento").is(
+    ":visible"
+  );
   let cant_horas = $("#select_cantidad_horas_servicios_incremento").val();
   let promo_estaciones = $("#chbox_lista_de_precios_incremento").is(":checked");
   let nro_promo = $("#select_promocion_servicios_incremento").val();
-  let nombre_promo = $("#select_promocion_servicios_incremento option:selected").text();
-  let total_importe_visible = $("#txt_importe_total_servicios_incremento").is(":visible");
+  let nombre_promo = $(
+    "#select_promocion_servicios_incremento option:selected"
+  ).text();
+  let total_importe_visible = $("#txt_importe_total_servicios_incremento").is(
+    ":visible"
+  );
   let total_importe = $("#txt_importe_total_servicios_incremento").val();
-
 
   if (nro_servicio == "") {
     error("Debe seleccionar un servicio");
@@ -124,7 +137,6 @@ function agregar_servicio_incremento() {
   } else if (total_importe_visible != false && total_importe <= 300) {
     error("Debe ingresar un importe mayor a $300");
   } else {
-
     let cedula = $("#txt_cedula_beneficiario_incremento").val();
 
     $.ajax({
@@ -142,7 +154,7 @@ function agregar_servicio_incremento() {
       },
       dataType: "JSON",
       success: function (response) {
-        if(response.error == false) {
+        if (response.error == false) {
           $(`#select_servicios_servicios_incremento option[value='${nro_servicio}']`).remove();
 
           $(".div_cantidad_horas_servicios_incremento").css("display", "none");
@@ -170,12 +182,10 @@ function agregar_servicio_incremento() {
         } else {
           error(response.mensaje);
         }
-      }
+      },
     });
-
   }
 }
-
 
 function listar_servicios_agregados_incremento(calcular_precio = true) {
   $("#div_lista_servicios_incremento").html("");
@@ -193,10 +203,14 @@ function listar_servicios_agregados_incremento(calcular_precio = true) {
     let numero_servicio = val["numero_servicio"];
     let nombre_servicio = val["nombre_servicio"];
 
-    let promocion = nombre_promo != "" ? `/ <span class="text-danger">${nombre_promo}</span>` : "";
-    let horas = cantidad_horas != "" ? 
-      `/ ${cantidad_horas}hrs` : ""; promo_estaciones = promo_estaciones ? 
-      `/ <span class="text-success">Sanatorio Estaciones</span>` : "";
+    let promocion =
+      nombre_promo != ""
+        ? `/ <span class="text-danger">${nombre_promo}</span>`
+        : "";
+    let horas = cantidad_horas != "" ? `/ ${cantidad_horas}hrs` : "";
+    promo_estaciones = promo_estaciones
+      ? `/ <span class="text-success">Sanatorio Estaciones</span>`
+      : "";
 
     document.getElementById("div_lista_servicios_incremento").innerHTML += `
         <li class="list-group-item d-flex justify-content-between align-items-start">
@@ -210,7 +224,6 @@ function listar_servicios_agregados_incremento(calcular_precio = true) {
   });
 }
 
-
 function quitar_servicio_incremento(numero_servicio, nombre_servicio) {
   $("#span_total_precio_servicios_incremento").text("?");
   document.getElementById("select_servicios_servicios_incremento").innerHTML += `<option value="${numero_servicio}">${nombre_servicio}</option>`;
@@ -221,16 +234,18 @@ function quitar_servicio_incremento(numero_servicio, nombre_servicio) {
   });
   $("#select_servicios_servicios_incremento").html(selectList);
 
-  array_servicios_agregados_incremento = array_servicios_agregados_incremento.filter(
-    (servicio) => servicio["numero_servicio"] != numero_servicio
-  );
+  array_servicios_agregados_incremento =
+    array_servicios_agregados_incremento.filter(
+      (servicio) => servicio["numero_servicio"] != numero_servicio
+    );
   listar_servicios_agregados_incremento();
 }
 
-
 function calcular_total_incremento() {
   $("#span_total_precio_servicios_incremento").text("?");
-  let fecha_nacimiento = $("#txt_fecha_nacimiento_beneficiario_incremento").val();
+  let fecha_nacimiento = $(
+    "#txt_fecha_nacimiento_beneficiario_incremento"
+  ).val();
 
   if (array_servicios_agregados_incremento.length == 0) {
     $("#span_total_precio_servicios_incremento").text("0");
@@ -261,7 +276,6 @@ function calcular_total_incremento() {
   }
 }
 
-
 function vaciar_datos_servicio_incremento() {
   //Elimino los datos del array
   array_servicios_agregados_incremento = [];
@@ -272,6 +286,7 @@ function vaciar_datos_servicio_incremento() {
   $("#select_cantidad_horas_servicios_incremento").val("");
   $("#chbox_lista_de_precios_incremento").prop("checked", false);
   $("#select_promocion_servicios_incremento").val("");
+  $("#txt_observacion_servicios_incremento").val("");
   $("#txt_importe_total_servicios_incremento").val("");
   //Oculto los divs
   $(".div_cantidad_horas_servicios_incremento").css("display", "none");
