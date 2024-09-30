@@ -2,6 +2,8 @@ $(document).ready(function () {
   $("#modal_tipo_afiliacion").modal("show");
 });
 
+
+
 function validar_afiliacion() {
   let tipo_afiliacion = $("#select_tipo_afiliacion").val();
 
@@ -20,10 +22,12 @@ function validar_afiliacion() {
   }
 }
 
+
 /** Si esta abierto el modal se autoselecciona el campo password **/
 $("#modal_validar_cedula").on("shown.bs.modal", function (e) {
   $("#txt_cedula").focus();
 });
+
 
 function validar_cedula() {
   let cedula = $("#txt_cedula").val();
@@ -64,6 +68,7 @@ function validar_cedula() {
   }
 }
 
+
 function comprobar_puede_incrementar(datos, puede_incrementar) {
   if (puede_incrementar) {
     mostrar_div_datos_venta_incremento(1);
@@ -81,9 +86,7 @@ function comprobar_puede_incrementar(datos, puede_incrementar) {
     $("#txt_correo_electronico_beneficiario_incremento").val(email);
     $("#txt_celular_beneficiario_incremento").val(celular);
     $("#txt_telefono_fijo_beneficiario_incremento").val(telefono_fijo);
-    $("#txt_telefono_alternativo_beneficiario_incremento").val(
-      telefono_alternativo
-    );
+    $("#txt_telefono_alternativo_beneficiario_incremento").val(telefono_alternativo);
     $("#rbtn_beneficiario_incremento").val("Puerta");
     $("#modal_tipo_afiliacion").modal("hide");
     $("#modal_validar_cedula").modal("hide");

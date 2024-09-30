@@ -344,7 +344,7 @@ function agregar_padron_datos_socio_grupo_familiar()
                 grupo = '0',
                 idrelacion = '$id_relacion',
                 empresa_rut = '$empresa_rut',
-                total_importe = '$importe_total',
+                total_importe = '0',
                 nactual = '1',
                 `version` = '1',
                 flagchange = '1',
