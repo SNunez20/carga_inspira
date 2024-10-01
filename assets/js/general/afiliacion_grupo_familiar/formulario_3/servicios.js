@@ -329,9 +329,10 @@ function calcular_total_grupo_familiar(cedula) {
             type: "GET",
             url: `${url_ajax}afiliacion_grupo_familiar/servicios/calcular_precio_total.php`,
             data: {
-                cedula: cedula,
-                fecha_nacimiento: fecha_nacimiento,
-                array_servicios_agregados_grupo_familiar: array_servicios_agregados_grupo_familiar,
+                cedula,
+                fecha_nacimiento,
+                array_servicios_agregados_grupo_familiar,
+                array_datos_beneficiario_grupo_familiar,
             },
             dataType: "JSON",
             beforeSend: function () {
